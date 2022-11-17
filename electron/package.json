@@ -1,0 +1,23 @@
+{
+    "name": "maternity_system",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "electron": "electron --inspect=9999 .",
+        "packager": "electron-packager . yun --platform=win32 --arch=x64 --overwrite --icon=icon.ico",
+        "install": "electron-rebuild"
+    },
+    "main": "main.js",
+    "dependencies": {
+        "serialport": "^9.2.0",
+        "vue-electron": "^1.0.6"
+    },
+    "devDependencies": {
+        "electron": "^13.1.9",
+        "electron-packager": "^15.2.0",
+        "electron-rebuild": "^2.3.5"
+    },
+    "win": {
+        "icon": "./icon.ico"
+    }
+}
