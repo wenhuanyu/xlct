@@ -169,22 +169,27 @@
                                         <el-col :span="12">
                                             <el-select placeholder="请选择患者"
                                                        v-model="patientListName"
+                                                       filterable :filter-method="dataFilter"
+                                                       @visible-change="visibleHideSelectInput"
                                                        @change="onPatientChange($event)"
                                                        clearable
                                             >
-                                                <el-option v-for="item in patientList"
+                                                <el-option v-for="item in deviceIdList"
                                                            :key="item.id"
                                                            :value="item.id"
-                                                           :label="item.name +'  '+ item.age+'岁'"></el-option>
+                                                           :label="item.name +'  '+ item.age+'岁'+'  '+item.medical_num"></el-option>
                                             </el-select>
                                         </el-col>
                                         <el-col :span="12">
                                             <el-select placeholder="请选择终端"
                                                        v-model="terminal_nickname"
-                                                       @change="hanldClickTerminal($event)" style="width: 100%;"
+                                                       filterable :filter-method="dataFilterTerminal"
+                                                       @visible-change="visibleHideSelectInputTerminal"
+                                                       @change="hanldClickTerminal($event)"
+                                                       style="width: 100%;"
                                                        clearable
                                             >
-                                                <el-option v-for="item in terminalList"
+                                                <el-option v-for="item in terminalIdList"
                                                            :key="item.id"
                                                            :value="item.id"
                                                            :label="item.nickname"></el-option>
@@ -463,7 +468,9 @@ export default {
             exportData:{},
             isLoading:false,
             el_dialog_width:'80vw',
-            el_col_span:'11'
+            el_col_span:'11',
+            terminalIdList:[],
+            deviceIdList:[],
         };
     },
     mounted() {
@@ -475,6 +482,50 @@ export default {
     computed: {},
     watch: {},
     methods: {
+        // 自定义筛选方法
+        dataFilter(val) {
+            if (val) {
+                let filterResult = [];
+                let originalData = JSON.parse(JSON.stringify(this.patientList));
+                originalData.filter((item) => {
+                    if (item.medical_num.includes(val)) {
+                        filterResult.push(item);
+                    }
+                })
+                this.deviceIdList = filterResult
+
+            } else {
+                this.deviceIdList = this.patientList;
+            }
+        },
+        // 当下拉框出现时触发
+        visibleHideSelectInput(val) {
+            if(val) {
+                this.deviceIdList = JSON.parse(JSON.stringify(this.patientList));
+            }
+        },
+        // 自定义筛选方法
+        dataFilterTerminal(val) {
+            if (val) {
+                let filterResult = [];
+                let originalData = JSON.parse(JSON.stringify(this.terminalList));
+                originalData.filter((item) => {
+                    if (item.nickname.includes(val)) {
+                        filterResult.push(item);
+                    }
+                })
+                this.terminalIdList = filterResult
+
+            } else {
+                this.terminalIdList = this.terminalList;
+            }
+        },
+        // 当下拉框出现时触发
+        visibleHideSelectInputTerminal(val) {
+            if(val) {
+                this.terminalIdList = JSON.parse(JSON.stringify(this.terminalList));
+            }
+        },
         //导出量表点击
         getScaleExport(prov) {
             this.isLoading = true
@@ -904,7 +955,9 @@ export default {
         },
         add() {
             this.dialogFormXuan = true
+            this.qingkong()
             this.type = ''
+
         },
         nextStep() {
             if(this.type == 2) {
@@ -922,6 +975,23 @@ export default {
         onPeriodTimeChange(e) {
             // console.log(e)
             // console.log(this.periodTime)
+        },
+        qingkong() {
+            this.add_newList = [];
+            this.patientListName = '';
+            this.terminal_nickname = '';
+            this.music = '';
+            this.limit_time_radio = '';
+            this.needMusic = false;
+            this.limit_time_input = '';
+            this.limit_time_radio = 0
+            this.periodTime = ''
+            this.limit_Time =''
+            this.curindex = 0;
+            this.infoForm = []
+            this.curInfo = ''
+            this.terminal_id = ''
+            this.terminal_id_name = ''
         },
         async buttonSubmit() {
             if (this.patientListName == '' && this.type !== 3) {
@@ -971,27 +1041,19 @@ export default {
             this.form.music_time = this.periodTime;
             this.form.policy_id = policy_id.join(',')
             // console.log(this.form)
+            console.log('this.type',this.type)
             if(this.type == 2) {
                 this.form.type = 1
             }else if(this.type == 3) {
                 this.form.type = 2
+            } else {
+                this.form.type = 0
             }
             await this.$axios.post('api/exam/add', this.$qs.stringify(this.form)).then(res => {
                 if (res.data.code === 1) {
                     this.dialogFormVisible = false
                     this.Refresh()
-                    this.add_newList = [];
-                    this.patientListName = '';
-                    this.terminal_nickname = '';
-                    this.music = '';
-                    this.limit_time_radio = '';
-                    this.needMusic = false;
-                    this.limit_time_input = '';
-                    this.limit_time_radio = 0
-                    this.periodTime = ''
-                    this.limit_Time =''
-                    this.terminal_id = ''
-                    this.terminal_id_name = ''
+                    this.qingkong()
                 }
                 // console.log(res.data.info)
             })
