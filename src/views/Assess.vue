@@ -488,7 +488,7 @@ export default {
                 let filterResult = [];
                 let originalData = JSON.parse(JSON.stringify(this.patientList));
                 originalData.filter((item) => {
-                    if (item.medical_num.includes(val)) {
+                    if (item.medical_num.includes(val) || item.name.includes(val)) {
                         filterResult.push(item);
                     }
                 })
@@ -994,10 +994,6 @@ export default {
             this.terminal_id_name = ''
         },
         async buttonSubmit() {
-            if (this.patientListName == '' && this.type !== 3) {
-                this.$message.error('请选择患者');
-                return;
-            }
             if (this.period_e === true) {
                 if (this.music === '') {
                     this.$message('请选择音乐')
@@ -1032,6 +1028,11 @@ export default {
                 this.policyIds.map(item => {
                     policy_id.push(item)
                 })
+            }
+
+            if (patient_ids.length<=0 && this.type !== 3) {
+                this.$message.error('请选择患者');
+                return;
             }
             // console.log(test_paper_ids)
             this.form.patient_ids = patient_ids.join(',')

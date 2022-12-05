@@ -36,7 +36,14 @@
 </template>
 
 <script>
-
+var userAgent = navigator.userAgent.toLowerCase()
+if(userAgent.indexOf('electron/')>-1) {
+    console.log('桌面应用')
+    var Store = window.require('electron-store')
+    var storeName = new Store();
+}else {
+    console.log('浏览器')
+}
     export default {
         name    : "TerminalLogin",
         data() {
@@ -89,13 +96,26 @@
                             //session存储用户类型
                             sessionStorage.setItem('usertype','term')
 
-                            if (this.remember) {
-                                this.$store.commit('setTerminalAccount', {
-                                    username: this.username,
-                                    password: this.password
-                                });
-                            } else {
-                                this.$store.commit('setTerminalAccount', '');
+
+                            var userAgent = navigator.userAgent.toLowerCase()
+                            if(userAgent.indexOf('electron/')>-1) {
+                                if (this.remember) {
+                                    //记住密码
+                                    storeName.set("xlctzdname",this.username);
+                                    storeName.set("xlctzdpassword",this.password);
+                                } else {
+                                    storeName.delete('xlctzdname');
+                                    storeName.delete('xlctzdpassword');
+                                }
+                            }else {
+                                if (this.remember) {
+                                    this.$store.commit('setTerminalAccount', {
+                                        username: this.username,
+                                        password: this.password
+                                    });
+                                } else {
+                                    this.$store.commit('setTerminalAccount', '');
+                                }
                             }
                         }
                     })
@@ -103,11 +123,22 @@
         },
 
         mounted() {
-            if (this.$store.state.user.terminal.account) {
-                let useraccount = this.$store.state.user.terminal.account;
-                this.password   = useraccount.password;
-                this.username   = useraccount.username;
-                this.remember   = true;
+            var userAgent = navigator.userAgent.toLowerCase()
+            if(userAgent.indexOf('electron/')>-1) {
+                if(storeName.has("xlctzdname")){
+                    this.password = storeName.get('xlctzdpassword')
+                    this.username = storeName.get('xlctzdname')
+                    this.remember = true
+                } else  {
+                    this.remember = false
+                }
+            }else {
+                if (this.$store.state.user.terminal.account) {
+                    let useraccount = this.$store.state.user.terminal.account;
+                    this.password   = useraccount.password;
+                    this.username   = useraccount.username;
+                    this.remember   = true;
+                }
             }
         }
     }

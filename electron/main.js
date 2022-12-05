@@ -37,8 +37,8 @@ app.on('ready', function () {
     // mainWindow.loadURL("http://etqd.shoupinkangda.com/#/TermMonitor")
     // mainWindow.loadURL("http://xlctqd.shoupinkangda.com/#/Login")
     // mainWindow.loadURL("http://ycfqd.shoupinkangda.com/#/Login")
-    // mainWindow.loadURL("http://xlctqd.shoupinkangda.com/#/TerminalLogin")
-    mainWindow.loadURL("http://localhost:8082/#/Login")
+    mainWindow.loadURL("http://xlctqd.shoupinkangda.com/#/Login")
+    // mainWindow.loadURL("http://localhost:8082/#/Login")
     //mainWindow.loadURL("http://192.168.1.199:81/#/Login")
     // mainWindow.loadURL("http://xlct.shoupinkangda.com/h5/#/Login")
 
@@ -56,7 +56,7 @@ app.on('ready', function () {
 
 
     // 打开开发工具
-    mainWindow.openDevTools();
+    // mainWindow.openDevTools();
 
     // 当 window 被关闭，这个事件会被发出
     mainWindow.on('closed', function () {
