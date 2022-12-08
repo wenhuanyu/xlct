@@ -197,56 +197,56 @@ export default {
             backup: {},
             zhixiSelect: [],
             rules: {
-                name: [{
-                    required: true,
-                    message: '请输入姓名',
-                    trigger: 'blur'
-                }],
-                gender: [{
-                    required: true,
-                    message: '请选择性别'
-                }],
+                // name: [{
+                //     required: true,
+                //     message: '请输入姓名',
+                //     trigger: 'blur'
+                // }],
+                // gender: [{
+                //     required: true,
+                //     message: '请选择性别'
+                // }],
                 // nation_id: [{
                 //     required: true,
                 //     message: '请选择民族'
                 // }],
-                hukou:[
-                    {required:true,message:'请选择户口类型'}
-                ],
-                medical_num: [{
-                    required: true,
-                    message: '请输入病历号'
-                }],
-                medical_insurance_num: [{
-                    required: true,
-                    message: '请输入医保号'
-                }],
-                birth: [{
-                    required: true,
-                    message: '请选择出生日期'
-                }],
-                phone: [{
-                    pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-                    message: "请输入正确的手机号码",
-                    trigger: "blur"
-                }],
-                idcard: [{
-                    // required: true,
-                    pattern:/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
-                    message: '请输入正确的身份证号'
-                }],
-                source: [{
-                    required: true,
-                    message: '请输入患者来源'
-                }],
+                // hukou:[
+                //     {required:true,message:'请选择户口类型'}
+                // ],
+                // medical_num: [{
+                //     required: true,
+                //     message: '请输入病历号'
+                // }],
+                // medical_insurance_num: [{
+                //     required: true,
+                //     message: '请输入医保号'
+                // }],
+                // birth: [{
+                //     required: true,
+                //     message: '请选择出生日期'
+                // }],
+                // phone: [{
+                //     pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
+                //     message: "请输入正确的手机号码",
+                //     trigger: "blur"
+                // }],
+                // idcard: [{
+                //     // required: true,
+                //     pattern:/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+                //     message: '请输入正确的身份证号'
+                // }],
+                // source: [{
+                //     required: true,
+                //     message: '请输入患者来源'
+                // }],
                 // marriage_id: [{
                 //     required: true,
                 //     message: '请输入婚姻状态'
                 // }],
-                education_id: [{
-                    required: true,
-                    message: '请输入学历信息'
-                }],
+                // education_id: [{
+                //     required: true,
+                //     message: '请输入学历信息'
+                // }],
                 // occupation_id: [{
                 //     required: true,
                 //     message: '请输入职业信息'
