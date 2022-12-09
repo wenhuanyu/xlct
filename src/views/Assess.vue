@@ -685,15 +685,7 @@ export default {
             this.period_e = e
         },
         onDialogClose() {
-            this.add_newList = [];
-            this.patientListName = '';
-            this.terminal_nickname = '';
-            this.music = '';
-            this.limit_time_radio = '';
-            this.needMusic = false;
-            this.limit_time_input = '';
-            this.limit_time_radio = 0
-            this.periodTime = ''
+            this.qingkong()
         },
 
         deleteRow(index, rows) {
@@ -992,6 +984,13 @@ export default {
             this.curInfo = ''
             this.terminal_id = ''
             this.terminal_id_name = ''
+            this.form.patient_ids = []
+            this.form.terminal_ids = []
+            this.form.test_paper_ids = []
+            this.form.music_id = ''
+            this.form.music_time = ''
+            this.form.policy_id = []
+            this.form.limit_time = 0
         },
         async buttonSubmit() {
             if (this.period_e === true) {
